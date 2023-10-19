@@ -37,44 +37,34 @@ def invite(name,option,fullname,lop):
         study = driver.find_element("xpath", '//*[@id="team-8789808"]')
         study.click()
 
-        if option == "Git": # Git-github
+        if "Git" in option: # Git-github
             git = driver.find_element("xpath", '//*[@id="team-8790397"]')
             git.click()
 
-        if option == "KTLT": #KTLT
+        if "KTLT" in option: #KTLT
             ktlt = driver.find_element("xpath", '//*[@id="team-8790239"]')
             ktlt.click()
 
-        if option == "OOP": #OOP
+        if "OOP" in option: #OOP
             oop = driver.find_element("xpath", '//*[@id="team-8790246"]')
             oop.click()
 
-        if option == "TinDaiCuong": #TDC
+        if "TinDaiCuong" in option: #TDC
             tdc = driver.find_element("xpath", '//*[@id="team-8790372"]')
             tdc.click()
 
-        if option == "CTDLGT": #CTDL
+        if "CTDLGT" in option: #CTDL
             ctdl = driver.find_element("xpath", '//*[@id="team-8790241"]')
             ctdl.click()
 
         time.sleep(1)
 
         confirm()
-        name = name + " | " + fullname + " | " + lop + "\n"
+        name = name + " | " + fullname + " | " + lop + " | " + option + "\n"
         datacpl.write(name)
-        # datacpl.write(" | ")
-        # datacpl.write(fullname)
-        # datacpl.write(" | ")
-        # datacpl.write(lop)
-        # datacpl.write("\n")
     except:
-        name = name + " | " + fullname + " | " + lop + "\n"
+        name = name + " | " + fullname + " | " + lop + " | " + option + "\n"
         databug.write(name)
-        # databug.write(" | ")
-        # databug.write(fullname)
-        # databug.write(" | ")
-        # databug.write(lop)
-        # databug.write("\n")
         return
 
 
