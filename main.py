@@ -3,29 +3,25 @@ import pandas as pd
 from selenium import webdriver
 
 driver = webdriver.Chrome(executable_path="chromedriver.exe")
-databug = open("./bug.txt","wt",encoding="utf8")
-datacpl = open("./complete","wt",encoding="utf8")
+databug = open("./bug.txt", "wt", encoding="utf8")
+datacpl = open("./complete.txt", "wt", encoding="utf8")
+
 
 def login_github(username_git, password_git):
     driver.get("https://github.com/login")
     driver.find_element_by_id("login_field").send_keys(username_git)
     driver.find_element_by_id("password").send_keys(password_git)
-    submit = driver.find_element("xpath",   '//*[@id="login"]/div[4]/form/div/input[13]')
+    submit = driver.find_element("xpath", '//*[@id="login"]/div[4]/form/div/input[13]')
     submit.click()
     time.sleep(10)
+
 
 def confirm():
     invited = driver.find_element("xpath", '/html/body/div[1]/div[6]/main/div[2]/form[2]/div[2]/div/button')
     invited.click()
 
-def invite(name,option,fullname,lop,check):
-    driver.get("https://github.com/orgs/sfit-utc/people")
-    invited = driver.find_element("xpath", '//*[@id="dialog-show-invite-member-dialog"]/span/span')
-    invited.click()
 
-    if check == "0":
-        return
-
+def selection(name,option,fullname,lop):
     driver.find_element_by_id("org-invite-complete-input").send_keys(name)
     time.sleep(2)
     try:
@@ -40,7 +36,7 @@ def invite(name,option,fullname,lop,check):
         study = driver.find_element("xpath", '//*[@id="team-8789808"]')
         study.click()
 
-        if "Git" in option: # Git-github
+        if "Git" in option:  # Git-github
             git = driver.find_element("xpath", '//*[@id="team-8790397"]')
             git.click()
 
@@ -71,11 +67,23 @@ def invite(name,option,fullname,lop,check):
         return
 
 
+def invite(name, option, fullname, lop, check):
+    driver.get("https://github.com/orgs/sfit-utc/people")
+    invited = driver.find_element("xpath", '//*[@id="dialog-show-invite-member-dialog"]/span/span')
+    invited.click()
+
+    if check == "0":
+        return
+    else:
+        selection(name,option,fullname,lop)
+
+
+
 def main():
     username_git = "khiemhm2004@gmail.com"
     password_git = "@hmk2004"
 
-    login_github(username_git,password_git)
+    login_github(username_git, password_git)
     data = pd.read_json("data.json")
 
     lenn = len(data)
@@ -86,7 +94,8 @@ def main():
         fullname = data.get("Họ và Tên")[i]
         lop = data.get("Tên Lớp (Viết in hoa, không dấu cách. Ví dụ: CNTT1-K62)")[i]
         check = data.get("Check")[i]
-        invite(name, option, fullname, lop,check)
+        check = str(check)
+        invite(name, option, fullname, lop, check)
         time.sleep(1)
 
 

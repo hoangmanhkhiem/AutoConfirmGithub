@@ -10,4 +10,6 @@ for i in range(lenn):
     lop = data.get("Tên Lớp (Viết in hoa, không dấu cách. Ví dụ: CNTT1-K62)")[i]
     check = data.get("Check")[i]
     check = str(check)
-    print(check)
+    if check == "0":
+        print(1)
+    print(type(check))
